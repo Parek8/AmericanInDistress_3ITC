@@ -1,11 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
     public TileData TileData { get; set; }
+
+    private GameObject _builtBuilding = null;
+    public bool IsOccupied => (_builtBuilding != null);
 
     internal void SetBuilding(GameObject building)
     {
@@ -15,15 +15,25 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        if (!IsOccupied)
+        {
+            if (ResourceManager.ResourceManagerInstance.HasEnoughResources(BuildManager.BuildManagerInstance.SelectedBuilding.RequiredCoins, BuildManager.BuildManagerInstance.SelectedBuilding.RequiredLogs))
+            {
+                var cube = Instantiate(BuildManager.BuildManagerInstance.SelectedBuilding.BuiltPrefab);
 
-        Debug.Log(cube);
+                var cmd = new BuildCommand(
+                            cube,
+                            this
+                            );
 
-        var cmd = new BuildCommand(
-            cube,
-            this
-            );
+                CommandQueue.Instance.AddCommand(cmd);
 
-        CommandQueue.Instance.AddCommand(cmd);
+                this._builtBuilding = cube;
+            }
+            else
+                Debug.Log("Not enough resources!");
+        }
+        else
+            Debug.Log("Tile is already occupied!");
     }
 }

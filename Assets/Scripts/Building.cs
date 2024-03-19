@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "/Building", menuName = "/Building")]
 public class Building : ScriptableObject
 {
    [field: SerializeField] public int RequiredCoins { get; private set; }

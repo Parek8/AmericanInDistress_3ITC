@@ -6,6 +6,7 @@ public class SetBuilding : MonoBehaviour
     public void AssignBuilding()
     {
         BuildManager.BuildManagerInstance.SetBuilding(BuiltBuilding);
+        UIManager.UIManagerInstance.Hide();
     }
 
     private void Update()

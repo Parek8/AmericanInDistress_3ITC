@@ -15,25 +15,30 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!IsOccupied)
+        if (GameManager.GameManagerInstance.IsPlayerBuilding())
         {
-            if (ResourceManager.ResourceManagerInstance.HasEnoughResources(BuildManager.BuildManagerInstance.SelectedBuilding.RequiredCoins, BuildManager.BuildManagerInstance.SelectedBuilding.RequiredLogs))
+            if (!IsOccupied)
             {
-                var cube = Instantiate(BuildManager.BuildManagerInstance.SelectedBuilding.BuiltPrefab);
+                if (ResourceManager.ResourceManagerInstance.HasEnoughResources(BuildManager.BuildManagerInstance.SelectedBuilding))
+                {
+                    var cube = Instantiate(BuildManager.BuildManagerInstance.SelectedBuilding.BuiltPrefab);
 
-                var cmd = new BuildCommand(
-                            cube,
-                            this
-                            );
+                    var cmd = new BuildCommand(
+                                cube,
+                                this
+                                );
 
-                CommandQueue.Instance.AddCommand(cmd);
+                    CommandQueue.Instance.AddCommand(cmd);
 
-                this._builtBuilding = cube;
+                    this._builtBuilding = cube;
+
+                    ResourceManager.ResourceManagerInstance.DecreaseResources(BuildManager.BuildManagerInstance.SelectedBuilding);
+                }
+                else
+                    Debug.Log("Not enough resources!");
             }
             else
-                Debug.Log("Not enough resources!");
+                Debug.Log("Tile is already occupied!");
         }
-        else
-            Debug.Log("Tile is already occupied!");
     }
 }

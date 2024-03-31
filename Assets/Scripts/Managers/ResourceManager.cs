@@ -16,11 +16,11 @@ internal class ResourceManager : MonoBehaviour
         this.Logs = 200;
     }
 
-    internal void DecreaseResources(int decreasedCoins = 0, int decreasedLogs = 0)
+    internal void DecreaseResources(Building BuiltBuilding)
     {
-        this.Coins -= decreasedCoins;
-        this.Logs -= decreasedLogs;
+        this.Coins -= BuiltBuilding.RequiredCoins;
+        this.Logs -= BuiltBuilding.RequiredLogs;
     }
 
-    internal bool HasEnoughResources(int decreasedCoins = 0, int decreasedLogs = 0) => ((this.Coins <= decreasedCoins) && (this.Logs <= decreasedLogs));
+    internal bool HasEnoughResources(Building BuiltBuilding) => ((this.Coins >= BuiltBuilding.RequiredCoins) && (this.Logs >= BuiltBuilding.RequiredLogs));
 }

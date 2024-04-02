@@ -17,6 +17,8 @@ public class BuildingCard : MonoBehaviour
     [SerializeField]
     Sprite BuildingSprite;
 
+    //[field: SerializeField] Button 
+
     private void Start()
     {
         if(BuildingScriptableObject == null) 
@@ -37,7 +39,5 @@ public class BuildingCard : MonoBehaviour
         BuildingIconImage.sprite = BuildingSprite;
         BuildingNameText.text = BuildingScriptableObject.BuildingName;
         BuildingCostText.text = $"Logs: {BuildingScriptableObject.RequiredLogs} \n Coins: {BuildingScriptableObject.RequiredCoins}";
-        
-
     }
 }

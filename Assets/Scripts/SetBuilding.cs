@@ -5,8 +5,7 @@ public class SetBuilding : MonoBehaviour
     [field: SerializeField] Building BuiltBuilding;
     public void AssignBuilding()
     {
-        Debug.Log("ahoj");
-        UIManager.UIManagerInstance.Hide();
+        UIManager.UIManagerInstance.HideBuildSelector();
         BuildManager.BuildManagerInstance.SetBuilding(BuiltBuilding);
         GameManager.GameManagerInstance.SetPlayerState(PlayerStates.Building);
     }
